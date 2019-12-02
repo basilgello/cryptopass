@@ -1,0 +1,40 @@
+.TH CRYPTOPASS 1
+.SH NAME
+cryptopass \- A CLI utility for generating long, unguessable passwords.
+.SH SYNOPSIS
+.B cryptopass
+[\fBLOGIN\fR]
+[\fBDOMAIN\fR]
+[\fBSIZE\fR]
+.SH DESCRIPTION
+.B cryptopass
+A CLI utility for generating long, unguessable passwords.
+.TP
+Program generates the password from:
+.TP
+* Login (be it email, login, user ID...),
+.TP
+* Domain name of the resource where password is generated for,
+.TP
+* Password length (1-32, default 25)
+.TP
+* Master password
+.TP
+using 5000 iterations of PKDBF2-SHA256 algorithm.
+.SH OPTIONS
+.TP
+.TP
+\fBLOGIN\fR
+The login to the remote resource (email, login, user ID etc)
+.TP
+\fBDOMAIN\fR
+The remote resource (e.g www.domain.com)
+.TP
+\fBSIZE\fR = \fI1-32\fR
+The length of generated password in bytes. Default is 25
+.SH AUTHORS
+.TP
+This program is created by Vasyl Gello <vasek.gello@gmail.com> using base64 library by Jouni Malinen <j@w1.fi> and fastpbkdf2 library by Joseph Birr-Pixton <jpixton@gmail.com>.
+.SH LICENSE
+.TP
+This program is licensed under Apache License 2.0.

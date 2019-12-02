@@ -1,0 +1,9 @@
+*.lo
+*.o
+*.la
+Makefile
+autom4te.cache
+cryptopass
+config.h
+config.log
+config.status
