@@ -8,7 +8,7 @@
 
 #ifdef NO_CONFIGURE_BUILD
 #define PACKAGE_NAME "cryptopass"
-#define PACKAGE_VERSION "1.0"
+#define PACKAGE_VERSION "1.1.0"
 #define PACKAGE_BUGREPORT "vasek.gello@gmail.com"
 #else
 #include <config.h>
@@ -22,59 +22,7 @@
 #include <termios.h>
 #endif
 
-#include <base64/base64.h>
-#include <fastpbkdf2/fastpbkdf2.h>
-
-char cryptopass(const char *masterpassword, const unsigned char *salt,
-		char *derivedpassword, unsigned int derivedcapacity)
-{
-	unsigned char digest[32]; /* 32 bytes for SHA-256 */
-
-	char *b64_digest = NULL;
-	size_t b64_len = 0;
-
-	/* Some sanity checks */
-
-	if (!masterpassword || !salt || !derivedpassword || !derivedcapacity)
-		return 0;
-
-	/* Instantiate the digest and password arrays */
-
-	memset(digest, 0, 32);
-
-	/*
-	   Digest the PBKDF2-HMAC-SHA256-5000 from
-	   master password and salt
-	*/
-
-	fastpbkdf2_hmac_sha256(masterpassword, strlen(masterpassword), salt,
-			       strlen(salt), 5000, /* iterations */
-			       digest, 32 /* sizeof(digest) */);
-
-	/* Encode the digest with Base64 */
-
-	b64_digest = base64_encode(digest, 32, &b64_len);
-
-	if (b64_len < derivedcapacity) {
-		free(b64_digest);
-		b64_digest = NULL;
-		b64_len = 0;
-		return 0;
-	}
-
-	/* Copy requested amount of bytes into output array */
-
-	strncpy(derivedpassword, b64_digest, derivedcapacity);
-
-	/* Clean up */
-
-	free(b64_digest);
-
-	b64_digest = NULL;
-	b64_len = 0;
-
-	return 1;
-}
+#include <libcryptopass/libcryptopass.h>
 
 int main(int argc, char **argv)
 {
@@ -133,11 +81,11 @@ int main(int argc, char **argv)
 
 	/* Instantiate arrays */
 
-	memset(derivedpassword, 0, PASSWORD_BUFFER_SIZE);
-	memset(domain, 0, MAX_INPUT_SIZE);
-	memset(masterpassword, 0, MAX_INPUT_SIZE);
-	memset(passlenbuf, 0, PASSWORD_LENGTH_BUFFER_SIZE);
-	memset(salt, 0, SALT_BUFFER_SIZE);
+	memset(derivedpassword, 0, sizeof(derivedpassword));
+	memset(domain, 0, sizeof(domain));
+	memset(masterpassword, 0, sizeof(masterpassword));
+	memset(passlenbuf, 0, sizeof(passlenbuf));
+	memset(salt, 0, sizeof(salt));
 	memset(username, 0, MAX_INPUT_SIZE);
 
 	/* Get username */

@@ -102,6 +102,7 @@ And finally:
         -DNO_CONFIGURE_BUILD \
         -I lib/ \
         src/cryptopass.c \
+        lib/libcryptopass/libcryptopass.c \
         lib/fastpbkdf2/fastpbkdf2.c \
         lib/base64/base64.c
     ```
@@ -128,6 +129,7 @@ To create static builds for Android:
         -DNO_CONFIGURE_BUILD \
         -I lib/ \
         src/cryptopass.c \
+        lib/libcryptopass/libcryptopass.c \
         lib/fastpbkdf2/fastpbkdf2.c \
         lib/base64/base64.c
 
@@ -139,6 +141,7 @@ To create static builds for Android:
         -DNO_CONFIGURE_BUILD \
         -I lib/ \
         src/cryptopass.c \
+        lib/libcryptopass/libcryptopass.c \
         lib/fastpbkdf2/fastpbkdf2.c \
         lib/base64/base64.c
     ```
